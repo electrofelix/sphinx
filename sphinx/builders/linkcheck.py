@@ -102,6 +102,8 @@ class CheckExternalLinksBuilder(Builder):
 
     def init(self):
         self.to_ignore = [re.compile(x) for x in self.app.config.linkcheck_ignore]
+        self.skip_anchors = [re.compile(x)
+                             for x in self.app.config.linkcheck_anchors_ignore]
         self.good = set()
         self.broken = {}
         self.redirected = {}
@@ -134,6 +136,10 @@ class CheckExternalLinksBuilder(Builder):
             # split off anchor
             if '#' in uri:
                 req_url, anchor = uri.split('#', 1)
+                for rex in self.skip_anchors:
+                    if rex.match(uri):
+                        anchor = None
+                        break
             else:
                 req_url = uri
                 anchor = None

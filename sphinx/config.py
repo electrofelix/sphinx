@@ -257,6 +257,7 @@ class Config(object):
         linkcheck_timeout = (None, None, [int]),
         linkcheck_workers = (5, None),
         linkcheck_anchors = (True, None),
+        linkcheck_anchors_ignore = ([], None),
 
         # gettext options
         gettext_compact = (True, 'gettext'),
